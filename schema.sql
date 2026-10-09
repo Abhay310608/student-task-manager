@@ -1,0 +1,21 @@
+CREATE DATABASE IF NOT EXISTS student_task_manager;
+USE student_task_manager;
+
+CREATE TABLE IF NOT EXISTS users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    password_hash CHAR(64) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS tasks (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    title VARCHAR(150) NOT NULL,
+    subject VARCHAR(80),
+    due_date DATE,
+    priority ENUM('LOW','MEDIUM','HIGH') DEFAULT 'MEDIUM',
+    status ENUM('PENDING','IN_PROGRESS','DONE') DEFAULT 'PENDING',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
